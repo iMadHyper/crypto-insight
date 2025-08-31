@@ -30,8 +30,8 @@ class Price(Base):
     market_cap_change_percentage_24h = Column(Numeric(5, 2))
     price_change_24h = Column(Numeric(20, 2))
     price_change_percentage_24h = Column(Numeric(5, 2))
-    ath = Column(Numeric(18, 8)) # all time high
     total_volume = Column(Numeric(20, 2))
+    ath = Column(Numeric(18, 8)) # all time high
     ath_date = Column(TIMESTAMP(timezone=True))
     atl = Column(Numeric(18, 8)) # all time low
     atl_date = Column(TIMESTAMP(timezone=True))
