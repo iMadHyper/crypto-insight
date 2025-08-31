@@ -1,0 +1,11 @@
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+  redis-commander:
+    image: rediscommander/redis-commander
+    container_name: redis-commander
+    ports:
+      - "8081:8081"
