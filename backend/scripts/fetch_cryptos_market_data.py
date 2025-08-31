@@ -1,10 +1,9 @@
 import asyncio
 import aiohttp
-
 from db import AsyncSessionLocal
 from models import Crypto, Price
 from decimal import Decimal
-from datetime import datetime, timezone
+from datetime import datetime
 
 import os
 from dotenv import load_dotenv
@@ -12,12 +11,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_URL = 'https://api.coingecko.com/api/v3/coins/markets'
 API_KEY = str(os.getenv("COINGECKO_API_KEY"))
 VS_CURRENCY = 'usd'
 
 
-async def fetch_top_cryptos():
+async def fetch_cryptos_market_data():
+    '''
+    Returns cryptos market data from CoinGecko
+    '''
+    API_URL = 'https://api.coingecko.com/api/v3/coins/markets'
     params = {
         'vs_currency' : VS_CURRENCY
     }
@@ -30,7 +32,6 @@ async def fetch_top_cryptos():
                 text = await response.text()
                 raise Exception(f'Error fetching data: {response.status} - {text}')
             return await response.json()
-
 
 async def save_to_db(data):
     async with AsyncSessionLocal() as session:
@@ -72,10 +73,10 @@ async def save_to_db(data):
                 count += 1
                 if count == 50:
                     break
-
-
+                
+                
 async def main():
-    data = await fetch_top_cryptos()
+    data = await fetch_cryptos_market_data()
     await save_to_db(data)
     
     
