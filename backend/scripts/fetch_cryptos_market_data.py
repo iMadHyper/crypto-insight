@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = str(os.getenv("COINGECKO_API_KEY"))
+API_KEY = os.getenv("COINGECKO_API_KEY")
 VS_CURRENCY = 'usd'
 
 async def fetch_cryptos_market_data():
@@ -34,6 +34,9 @@ async def fetch_cryptos_market_data():
             return await response.json()
 
 async def save_to_db(data):
+    '''
+    Saves cryptos market data in db
+    '''
     async with AsyncSessionLocal() as session:
         result = await session.execute(select(Crypto))
         cryptos_ids = [c.id for c in result.scalars().all()]

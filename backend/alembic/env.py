@@ -5,20 +5,15 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from db import Base
+from db import Base, DB_NAME, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER
 import models
 
-import os
-from dotenv import load_dotenv
-
-
-load_dotenv()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-database_url = str(os.getenv('URL_DATABASE'))
+database_url = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 if not database_url:
     raise ValueError("Переменная окружения URL_DATABASE не установлена!")
 

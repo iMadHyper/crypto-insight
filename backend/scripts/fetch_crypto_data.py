@@ -19,7 +19,7 @@ async def fetch_crypto_data(id: str):
     '''
     API_URL = f'https://api.coingecko.com/api/v3/coins/{id}'
     headers = {
-        'x-cg-pro-api-key' : str(os.getenv("COINGECKO_API_KEY"))
+        'x-cg-pro-api-key' : os.getenv("COINGECKO_API_KEY")
     }
     async with aiohttp.ClientSession() as session:
         async with session.get(API_URL, headers=headers) as response:
